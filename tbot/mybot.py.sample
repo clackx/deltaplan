@@ -1,0 +1,25 @@
+import logging
+
+from telegram import Bot
+from telegram.utils.request import Request
+
+request = Request(
+    connect_timeout=1.0,
+    read_timeout=1.0,
+    con_pool_size=8,
+)
+
+bot = Bot(
+    request=request,
+    token="teletoken",
+    base_url=getattr('/', 'PROXY_URL', None),
+)
+
+logger = logging.getLogger('deltaplan')
+formatter = logging.Formatter('[%(asctime)s] %(levelname)-7s %(message)s', '%m-%d %H:%M:%S')
+handler = logging.FileHandler('notifier.log')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
+logger.info('=' * 24)
+logger.info("==== START LOGGING  ====")
